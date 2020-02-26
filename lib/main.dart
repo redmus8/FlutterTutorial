@@ -1,83 +1,60 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 void main() {
-  runApp(MyApp());
+  return runApp(
+    MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.red,
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('Dicee'),
+          backgroundColor: Colors.red,
+        ),
+        body: DicePage(),
+      ),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
+class DicePage extends StatefulWidget {
+  @override
+  _DicePageState createState() => _DicePageState();
+}
+
+class _DicePageState extends State<DicePage> {
+  int leftDiceNumber = 1;
+  int rightDiceNumber = 2;
+  void changeDiceNumber() {
+    setState(() {
+      leftDiceNumber = Random().nextInt(6) + 1;
+      rightDiceNumber = Random().nextInt(6) + 1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.teal,
-        body: SafeArea(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            CircleAvatar(
-              radius: 50.0,
-              backgroundImage: AssetImage('images/original.jpg'),
+    // TODO: implement build
+    return Center(
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: FlatButton(
+              onPressed: () {
+                changeDiceNumber();
+              },
+              child: Image.asset('images/dice$leftDiceNumber.png'),
             ),
-            Text(
-              'Deku izuko',
-              style: TextStyle(
-                  fontSize: 40.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Tomorrow'),
+          ),
+          Expanded(
+            child: FlatButton(
+              child: Image.asset('images/dice$rightDiceNumber.png'),
+              onPressed: () {
+                changeDiceNumber();
+              },
             ),
-            Text(
-              'Hero Academia',
-              style: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.teal.shade200,
-                  letterSpacing: 2.5,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Tomorrow'),
-            ),
-            SizedBox(
-              height: 20.0,
-              width: 200.0,
-              child: Divider(
-                color: Colors.teal.shade100,
-              ),
-            ),
-            Card(
-              color: Colors.white,
-              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-              child: ListTile(
-                  leading: Icon(
-                    Icons.phone,
-                    color: Colors.teal.shade900,
-                  ),
-                  title: Text(
-                    '+213 771 48 85 06',
-                    style: TextStyle(
-                      color: Colors.teal.shade900,
-                      fontFamily: 'Tomorrow',
-                      fontSize: 20,
-                    ),
-                  )),
-            ),
-            Card(
-              color: Colors.white,
-              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-              child: ListTile(
-                  leading: Icon(
-                    Icons.email,
-                    color: Colors.teal.shade900,
-                  ),
-                  title: Text(
-                    'redmus8@hotmail.com',
-                    style: TextStyle(
-                      color: Colors.teal.shade900,
-                      fontFamily: 'Tomorrow',
-                      fontSize: 20,
-                    ),
-                  )),
-            ),
-          ],
-        )),
+          ),
+        ],
       ),
     );
   }
